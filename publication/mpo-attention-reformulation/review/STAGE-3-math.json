@@ -1,0 +1,23 @@
+{
+  "summary": "The mathematical foundations of the Hierarchical MPO-Attention manuscript have been significantly improved to address previous concerns regarding Theorem formulations. Theorem 1 now correctly uses an inequality bound with an approximation gap $\\delta(\\chi)$, avoiding the problematic 'if and only if' condition. Theorem 2 adopts the requested Lipschitz constant $C(\\beta) = \\beta/4$. Theorem 3 now correctly restricts its claim to local level-wise equivariance. However, a major mathematical discrepancy persists regarding computational complexity: the abstract claims $O(n^2)$ complexity (with a $16\\times$ reduction factor), which contradicts the derived $O(n)$ complexity indicated in the supporting derivation files ($O(n \\cdot d \\cdot \\chi^2 + n \\cdot \\chi^3)$). The complexity analysis needs reconciliation to ensure scientific accuracy.",
+  "recommendation_ceiling": "major_revision",
+  "claims_reviewed": [
+    "T1",
+    "T2",
+    "T3"
+  ],
+  "proof_audits": [
+    {
+      "claim_id": "T1",
+      "audit": "The formulation $\\| A - A_{MPO} \\|_F \\le \\sigma_{\\chi+1}(A) + \\delta(\\chi)$ is mathematically sound as an upper bound. The proof correctly identifies that the MPO structure is a restricted class of matrices, and the approximation error is the sum of the best rank-$\chi$ error (Eckart-Young-Mirsky) and the structural gap $\\delta(\\chi)$."
+    },
+    {
+      "claim_id": "T2",
+      "audit": "The requested Lipschitz constant $C(\\beta) = \\beta/4$ is used. The proof in the manuscript is brief. While the spectral norm of the Jacobian of the row-wise softmax is indeed bounded by 1/4, the derivation of the effective Lipschitz constant for the total attention mechanism requires careful treatment of the Frobenius norm across the entire attention matrix, which is currently underspecified in the manuscript."
+    },
+    {
+      "claim_id": "T3",
+      "audit": "The claim of local level-wise equivariance is more rigorous than the previous claim of global equivariance. The proof argues that at a specific level of the MERA tree, swapping sibling tokens propagates in a symmetric fashion. This is plausible, but the manuscript should explicitly define the permutation group acting on the tree hierarchy to formally establish this level-wise equivariance."
+    }
+  ]
+}

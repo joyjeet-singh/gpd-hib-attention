@@ -1,0 +1,37 @@
+{
+  "manuscript_id": "mpo_attention",
+  "round": 1,
+  "recommendation": "reject",
+  "issues": [
+    {
+      "id": "REF-001",
+      "title": "Complexity Contradiction",
+      "severity": "major",
+      "status": "unresolved"
+    },
+    {
+      "id": "REF-002",
+      "title": "Misuse of Physics Terminology",
+      "severity": "major",
+      "status": "unresolved"
+    },
+    {
+      "id": "REF-003",
+      "title": "Missing Literature Context",
+      "severity": "major",
+      "status": "unresolved"
+    },
+    {
+      "id": "REF-004",
+      "title": "Unsupported Theoretical Basis (Approximation Gap)",
+      "severity": "major",
+      "status": "unresolved"
+    },
+    {
+      "id": "REF-005",
+      "title": "Unsupported Claims of Significance",
+      "severity": "major",
+      "status": "unresolved"
+    }
+  ]
+}

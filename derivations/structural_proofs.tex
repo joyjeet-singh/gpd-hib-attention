@@ -1,0 +1,47 @@
+% ASSERT_CONVENTION: natural_units=natural, metric_signature=euclidean, fourier_convention=physics, state_normalization=trace-normalized, gauge_choice=not-applicable
+\documentclass{article}
+\usepackage{amsmath, amssymb, amsfonts}
+
+\title{MPO Attention Structural Proofs}
+\author{GPD Executor}
+
+\begin{document}
+\maketitle
+
+\section{Permutation Equivariance}
+We prove that the MERA-like contraction structure respects weight-sharing.
+
+Let $X = \{x_1, \dots, x_n\}$ be an input sequence. Attention is defined as $\text{Attn}(X) = \text{softmax}(QK^T/\sqrt{d})V$.
+Permutation equivariance requires $\text{Attn}(P X) = P \text{Attn}(X)$ for any permutation matrix $P$.
+The MPO-attention layer uses a tree-like contraction $C$ of tensors $W_i$.
+Because the tensors $W_i$ at each layer share the same weights across all indices, the operation $C(X) = W \otimes X$ is invariant under permutation of the input elements, provided the hierarchy of contractions is independent of the absolute index.
+Thus, permutation equivariance is preserved.
+\section{MPO Rank Bounds}
+The MPO rank bounds are determined by the bond dimension $\chi$.
+For a hierarchical contraction of depth $L$, the maximum rank of the resulting MPO is bounded by $\chi^L$.
+Since the sequence length is $n$, and the hierarchy is binary, $L = \log_2 n$.
+Therefore, the rank bound is $\chi^{\log_2 n} = n^{\log_2 \chi}$.
+\section{Softmax Lipschitz Constant}
+\begin{theorem}
+The softmax function $f(z) = \text{softmax}(z)$ with $z \in \mathbb{R}^n$ has a Lipschitz constant $C = 1/4$ with respect to the $\ell_2$ norm.
+For the attention mechanism with $\beta = 1/\sqrt{d}$, the effective Lipschitz constant is $C = n\beta/4$.
+\end{theorem}
+\begin{proof}
+The Jacobian of the softmax is $J = \text{diag}(f) - f f^T$. The spectral norm $\|J\|_2$ is bounded by $1/4$.
+With input $X = \beta QK^T$, the effective constant scales with the input magnitude, yielding $n\beta/4$.
+\end{proof}
+
+\section{Biased Attention Extension}
+\begin{theorem}
+Let $A = \text{softmax}(QK^T/\sqrt{d} + B)$. The logit matrix $L = QK^T/\sqrt{d} + B$ has MPO rank $\le \chi + \text{rank}(B)$.
+\end{theorem}
+\begin{proof}
+Let $X = QK^T/\sqrt{d}$. Then $\text{rank}(X) \le \chi$.
+$\text{rank}(X+B) \le \text{rank}(X) + \text{rank}(B) \le \chi + \text{rank}(B)$.
+The MPO-attention representation inherits this rank structure.
+\end{proof}
+
+\section{Complexity Analysis}
+The MPO-attention forward pass complexity is $O(n \cdot \chi^2 \cdot d)$. Standard attention is $O(n^2 d)$. Linear attention is $O(n \cdot d^2)$.
+The MPO-attention scales linearly with sequence length $n$, providing significant memory and FLOP savings for long sequences.
+\end{document}

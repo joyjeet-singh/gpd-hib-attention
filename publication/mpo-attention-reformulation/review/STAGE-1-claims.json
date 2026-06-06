@@ -1,0 +1,31 @@
+{
+  "manuscript": "mpo_attention.tex",
+  "main_claim": "The authors propose Hierarchical MPO-Attention, a tensor network-based compression method for transformer self-attention using a 2-level binary tree MERA structure, claiming reduced computational complexity and provable approximation error bounds.",
+  "supporting_subclaims": [
+    "Hierarchical MPO-Attention reduces computational complexity by a constant factor of 16 compared to standard attention.",
+    "The approximation error is bounded by the distance to the optimal rank-chi approximation plus an MPO-specific gap.",
+    "The mechanism retains Lipschitz continuity.",
+    "The mechanism exhibits local level-wise permutation equivariance.",
+    "Empirical performance on associative recall outperforms a random baseline."
+  ],
+  "theorem_claims": [
+    {
+      "theorem_number": 1,
+      "theorem_kind": "Approximation Error Bound",
+      "hypotheses": ["MPO-attention with bond dimension chi"],
+      "parameters": ["A", "A_MPO", "sigma_{chi+1}(A)", "delta(chi)"]
+    },
+    {
+      "theorem_number": 2,
+      "theorem_kind": "Lipschitz Continuity",
+      "hypotheses": ["Attention mechanism with beta = 1/sqrt(d)"],
+      "parameters": ["L", "L_chi", "C(beta) = 1/(4*sqrt(d))"]
+    },
+    {
+      "theorem_number": 3,
+      "theorem_kind": "Local Equivariance",
+      "hypotheses": ["Within each MERA level l", "bias-free attention"],
+      "parameters": ["l", "n", "binary tree topology"]
+    }
+  ]
+}

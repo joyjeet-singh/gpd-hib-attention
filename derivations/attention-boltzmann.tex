@@ -1,0 +1,44 @@
+% ASSERT_CONVENTION: natural_units=natural, metric_signature=euclidean, fourier_convention=physics, state_normalization=trace-normalized, coordinate_system=row-major
+
+\section{Mapping Attention to Boltzmann Distribution}
+
+The standard scaled dot-product attention mechanism is defined as:
+\begin{equation}
+    A_{ij} = \text{softmax} \left( \frac{q_i \cdot k_j}{\sqrt{d}} \right) = \frac{\exp \left( \frac{q_i \cdot k_j}{\sqrt{d}} \right)}{\sum_{k} \exp \left( \frac{q_i \cdot k_k}{\sqrt{d}} \right)}
+\end{equation}
+where $q_i$ is the $i$-th query vector, $k_j$ is the $j$-th key vector, and $d$ is the embedding dimension.
+
+We identify this with a Boltzmann distribution:
+\begin{equation}
+    P(j|i) = Z_i^{-1} \exp(-\beta E_{ij})
+\end{equation}
+where $Z_i$ is the partition function for query $i$, $\beta$ is the inverse temperature, and $E_{ij}$ is the energy of the interaction between query $i$ and key $j$.
+
+\subsection{Energy and Temperature Definitions}
+
+Comparing the two expressions, we set:
+\begin{equation}
+    \beta = \frac{1}{\sqrt{d}}
+\end{equation}
+In natural units, the dimension $d$ is a dimensionless count, so $\beta$ is dimensionless ([mass$^0$]).
+
+The energy function is then defined as the negative dot product:
+\begin{equation}
+    E_{ij} = -q_i \cdot k_j
+\end{equation}
+
+The partition function $Z_i$ is given by the denominator of the softmax:
+\begin{equation}
+    Z_i = \sum_{k} \exp(-\beta E_{ik}) = \sum_{k} \exp \left( \frac{q_i \cdot k_k}{\sqrt{d}} \right)
+\end{equation}
+
+\subsection{Verification}
+
+\begin{enumerate}
+    \item \textbf{Exact Mapping:} The mapping is exact by construction. Substituting $E_{ij}$ and $\beta$ back into the Boltzmann distribution recovers the softmax formula:
+    \begin{equation}
+        P(j|i) = \frac{\exp \left( -\frac{1}{\sqrt{d}} (-q_i \cdot k_j) \right)}{Z_i} = \frac{\exp \left( \frac{q_i \cdot k_j}{\sqrt{d}} \right)}{\sum_{k} \exp \left( \frac{q_i \cdot k_k}{\sqrt{d}} \right)}
+    \end{equation}
+    \item \textbf{Dimensional Analysis:} Since $d$ is a dimensionless integer (embedding size), $\beta = 1/\sqrt{d}$ is dimensionless. The dot product $q \cdot k$ typically involves embedding vectors of dimension 1, so $E$ is dimensionless. The product $\beta E$ is thus dimensionless, as required for the exponent.
+    \item \textbf{Partition Function:} $Z_i$ satisfies the normalization condition $\sum_j P(j|i) = 1$.
+\end{enumerate}

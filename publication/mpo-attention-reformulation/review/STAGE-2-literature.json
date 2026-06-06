@@ -1,0 +1,30 @@
+{
+  "stage": "literature-review",
+  "review_summary": {
+    "status": "major_revision",
+    "recommendation": "The manuscript requires substantial revision to properly contextualize its contribution within the broader landscape of tensor-network-based compression and hierarchical modeling. The novelty claims, particularly the implication that MERA-like attention compression is unprecedented, are overstated due to missing citations to related work in tensor network methods for machine learning."
+  },
+  "findings": [
+    {
+      "type": "missing_citations",
+      "description": "The manuscript fails to cite existing work on tensor network (TN) decomposition and compression for neural network layers and attention mechanisms. While the application to MERA structures specifically for attention may be novel, the foundations (using TNs for structural compression) are well-established.",
+      "severity": "major"
+    },
+    {
+      "type": "novelty_assessment",
+      "description": "The claim of Hierarchical MPO-Attention as a novel compression mechanism is plausible, but the paper presents it in a vacuum, ignoring the existing body of literature attempting similar tensor-based optimizations of Transformers.",
+      "severity": "major"
+    },
+    {
+      "type": "literature_positioning",
+      "description": "The manuscript needs a dedicated section to distinguish its MERA-based hierarchical structure from other existing tensor-based attention approximations.",
+      "severity": "minor"
+    },
+    {
+      "type": "theoretical_claim_analysis",
+      "description": "Theorem 1 includes an approximation gap term $\\delta(\\chi)$ which is claimed to be non-negative but is not rigorously defined or bounded, undermining the 'provable error bounds' claim.",
+      "severity": "major"
+    }
+  ],
+  "proof_audits": []
+}

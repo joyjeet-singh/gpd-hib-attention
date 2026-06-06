@@ -1,0 +1,34 @@
+{
+  "manuscript_path": "GPD/publication/mpo-attention-reformulation/manuscript/mpo_attention.tex",
+  "final_recommendation": "reject",
+  "target_journal": "jhep",
+  "final_confidence": "high",
+  "central_claims_supported": false,
+  "claim_scope_proportionate_to_evidence": false,
+  "physical_assumptions_justified": false,
+  "proof_audit_coverage_complete": false,
+  "theorem_proof_alignment_adequate": false,
+  "unsupported_claims_are_central": true,
+  "reframing_possible_without_new_results": false,
+  "mathematical_correctness": false,
+  "novelty": false,
+  "significance": false,
+  "venue_fit": false,
+  "literature_positioning": false,
+  "unresolved_major_issues": 5,
+  "unresolved_minor_issues": 0,
+  "blocking_issue_ids": [
+    "REF-001",
+    "REF-002",
+    "REF-003",
+    "REF-004",
+    "REF-005"
+  ],
+  "stage_artifacts": [
+    "GPD/publication/mpo-attention-reformulation/review/STAGE-reader.json",
+    "GPD/publication/mpo-attention-reformulation/review/STAGE-literature.json",
+    "GPD/publication/mpo-attention-reformulation/review/STAGE-math.json",
+    "GPD/publication/mpo-attention-reformulation/review/STAGE-physics.json",
+    "GPD/publication/mpo-attention-reformulation/review/STAGE-interestingness.json"
+  ]
+}

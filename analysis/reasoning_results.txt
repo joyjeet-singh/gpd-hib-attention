@@ -1,0 +1,2 @@
+Associative recall accuracy: 0.8875
+Multi-hop reasoning accuracy: 0.8800

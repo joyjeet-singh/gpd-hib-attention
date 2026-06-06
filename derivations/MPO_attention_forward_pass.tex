@@ -1,0 +1,30 @@
+% ASSERT_CONVENTION: natural_units=natural, metric_signature=euclidean, fourier_convention=physics, coupling_convention=N/A, renormalization_scheme=N/A, gauge_choice=N/A
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+
+\begin{document}
+
+\section{MPO-Attention Forward Pass Derivation}
+
+The scaled dot-product attention is given by:
+\[
+A_{ij} = \text{softmax}\left(\frac{Q_i K_j^T}{\sqrt{d}}\right)V_j
+\]
+where $Q, K, V \in \mathbb{R}^{n \times d}$.
+
+\subsection{Hierarchical MERA-like Contraction}
+We approximate the attention matrix $A$ as an MPO with bond dimension $\chi$.
+For a sequence of length $n$, the MERA-like hierarchy contracts pairs of tokens:
+\[
+M^{(l)} = M_{left}^{(l)} \otimes M_{right}^{(l)}
+\]
+where $l$ is the layer index.
+
+\subsection{Bias Support}
+Bias matrices $B \in \mathbb{R}^{n \times n}$ are incorporated by augmenting the MPO cores:
+\[
+\tilde{M}^{(l)} = \begin{pmatrix} M^{(l)} & B^{(l)} \\ 0 & I \end{pmatrix}
+\]
+where $\text{rank}(B)=r$, making the augmented bond dimension $\chi+r$.
+
+\end{document}

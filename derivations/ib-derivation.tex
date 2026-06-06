@@ -1,0 +1,101 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{physics}
+
+% ASSERT_CONVENTION: natural_units=natural, metric_signature=euclidean, fourier_convention=physics, state_normalization=trace-normalized, entropy_convention=von_neumann_nats
+
+\title{Information Bottleneck Equivalence of Renormalization Group Flow}
+\author{GPD Executor}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+We aim to establish the formal equivalence between the Renormalization Group (RG) coarse-graining steps and the Information Bottleneck (IB) compression objective. In this framework, the RG flow produces a sequence of representations $T_l$ that are increasingly compressed while preserving information about the target features $Y$.
+
+\section{Mutual Information Definitions}
+Let $X$ be the input data (UV scale $l=0$) and $T_l$ be the coarse-grained representation at scale $l$. Let $Y$ be the global target variables we wish to predict or preserve. The mutual information between $X$ and $T_l$ is defined as:
+\begin{equation}
+    I(X; T_l) = \int dx dt_l p(x, t_l) \ln \frac{p(x, t_l)}{p(x) p(t_l)}
+\end{equation}
+Similarly, the information preserved about $Y$ in $T_l$ is:
+\begin{equation}
+    I(T_l; Y) = \int dt_l dy p(t_l, y) \ln \frac{p(t_l, y)}{p(t_l) p(y)}
+\end{equation}
+
+\section{The IB Objective and RG Mapping}
+The Information Bottleneck objective is to minimize:
+\begin{equation}
+    \mathcal{L}_{IB} = I(X; T) - \beta_{IB} I(T; Y)
+\end{equation}
+where $\beta_{IB}$ is a tradeoff parameter between compression and relevance.
+
+Consider a sequence of RG transformations $\{R_l\}_{l=0}^{L-1}$ such that $T_{l+1} = R_l(T_l)$ with $T_0 = X$. Each transformation $R_l$ can be viewed as a conditional probability distribution $p(T_{l+1}|T_l)$. The total compression function from the input $X$ to the representation at scale $l$ is:
+\begin{equation}
+    p(T_l | X) = \int dT_{l-1} \dots dT_1 p(T_l | T_{l-1}) p(T_{l-1} | T_{l-2}) \dots p(T_1 | X)
+\end{equation}
+Due to the Markov chain structure $X \to T_1 \to T_2 \to \dots \to T_l$, the Data Processing Inequality (DPI) holds:
+\begin{equation}
+    I(X; T_0) \geq I(X; T_1) \geq I(X; T_2) \geq \dots \geq I(X; T_l)
+\end{equation}
+This confirms that each RG step monotonically reduces the mutual information with the input, performing successive compression.
+
+\section{Verification of DPI and IB Consistency}
+To verify the consistency with the variational free energy $\mathcal{F} = \langle E \rangle - T S$, we identify:
+\begin{itemize}
+    \item Compression cost: $I(X; T_l) \longleftrightarrow S$ (entropy of the representation)
+    \item Relevance: $I(T_l; Y) \longleftrightarrow -\langle E \rangle$ (negative average energy, where $E$ relates to reconstruction error or prediction loss)
+\end{itemize}
+The IB optimality condition $\frac{\delta \mathcal{L}_{IB}}{\delta p(t|x)} = 0$ leads to the standard IB equations:
+\begin{equation}
+    p(t|x) = \frac{p(t)}{Z(x, \beta)} \exp\left( -\beta D_{KL}(p(y|x) \| p(y|t)) \right)
+\end{equation}
+This is exactly the form of the Boltzmann distribution used in Plan 01, where the KL divergence acts as an effective energy $E(x, t)$ describing how well $t$ represents the features of $x$ relevant to $y$.
+
+\section{Variational Free Energy and IB}
+In Plan 01, we established a variational free energy objective for the RG flow:
+\begin{equation}
+    F = \langle E \rangle - \frac{1}{\beta} S
+\end{equation}
+Mapping this to the IB objective, we identify the energy term $\langle E \rangle$ with the negative log-likelihood $-\ln p(Y|T)$, which relates to $I(T; Y)$, and the entropy $S$ with the compression cost $I(X; T)$.
+
+Specifically, if we choose the coarse-graining operator $R_l$ to minimize the local free energy at each scale, we are effectively solving the IB problem for that scale's representation.
+
+\section{Explicit MI Quantities at Scale $l$}
+The mutual information $I(X; T_l)$ represents the number of "bits" (or nats, in our convention) required to describe the state at scale $l$. For a system with bond dimension $\chi(l)$, we can upper bound this as:
+\begin{equation}
+    I(X; T_l) \leq \ln \chi(l)
+\end{equation}
+The relevance $I(T_l; Y)$ remains roughly constant in the "scaling" regime of the RG flow, where $T_l$ captures the long-range features of $X$.
+
+\section{Bond Dimension $\chi(l)$ Schedule}
+The bond dimension $\chi$ of the Matrix Product Operator (MPO) representation determines the approximation error $\epsilon$. For a 1D quantum chain (or a sequence in our case), the required bond dimension to maintain a fixed error $\epsilon$ scales with the entanglement entropy $S$ as:
+\begin{equation}
+    \chi \sim e^{S}
+\end{equation}
+In a critical 1D system, the entanglement entropy of a block of size $n$ scales as $S \sim \frac{c}{3} \ln n$, where $c$ is the central charge.
+
+During the RG flow, at scale $l$, the effective sequence length is $n_l = n / k^l$, where $k$ is the coarse-graining factor (typically $k=2$). If the attention mechanism captures critical correlations, the required bond dimension at scale $l$ is:
+\begin{equation}
+    \chi(l) = \chi_0 \left( \frac{n}{k^l} \right)^{\alpha}
+\end{equation}
+where $\alpha = c/3$. This implies that the bond dimension $\chi(l)$ decreases exponentially with the RG scale $l$:
+\begin{equation}
+    \chi(l) = \chi(0) k^{-\alpha l}
+\end{equation}
+where $\chi(0) = \chi_0 n^\alpha$.
+
+\subsection{Error Bounded Schedule}
+To keep the MPO truncation error $\epsilon$ bounded below a threshold $\epsilon_{max}$, we monitor the singular value spectrum $\{\sigma_i\}$ at each scale. The error is given by the sum of discarded singular values:
+\begin{equation}
+    \epsilon^2 = \sum_{i=\chi+1}^{\infty} \sigma_i^2
+\end{equation}
+Assuming a power-law decay of singular values $\sigma_i \sim i^{-\gamma}$, the error scales as $\epsilon^2 \sim \chi^{1-2\gamma}$. Thus, to keep $\epsilon$ constant, the bond dimension must satisfy:
+\begin{equation}
+    \chi \sim \epsilon^{\frac{2}{1-2\gamma}}
+\end{equation}
+As $\gamma$ changes under RG flow (moving towards fixed points), the schedule $\chi(l)$ must adapt to preserve the approximation quality.
+\end{document}

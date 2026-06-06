@@ -1,0 +1,32 @@
+{
+  "manuscript_id": "mpo-attention-reformulation",
+  "review_stage": "physics",
+  "recommendation_ceiling": "major_revision",
+  "proof_audits": [],
+  "findings": [
+    {
+      "category": "unsupported_physical_claim",
+      "claim": "Isometric tensors $T_l$ are 'effectively RG flow fixed points'.",
+      "assessment": "Unsupported",
+      "justification": "The tensors $T_l$ are learned parameters optimized for a task-specific loss function, not fixed points of a Renormalization Group (RG) transformation on a physical Hamiltonian. Applying RG nomenclature to neural network parameters without defining an associated physical system and flow equation constitutes a misuse of terminology."
+    },
+    {
+      "category": "overstated_interpretation",
+      "claim": "MERA structures provide a 'theoretical bridge between tensor networks and attention mechanisms'.",
+      "assessment": "Unsupported",
+      "justification": "The manuscript establishes a formal mapping between attention computation and tensor contractions, but fails to provide a physical motivation for this mapping. The formal resemblance does not imply a physical relationship between the attention mechanism and the emergent behavior of physical systems at critical points typically described by MERA."
+    },
+    {
+      "category": "overstated_interpretation",
+      "claim": "MPO compression is fundamentally based on physical coarse-graining.",
+      "assessment": "Overstated",
+      "justification": "The compression mechanism relies on Eckart-Young-Mirsky (SVD) truncation, which is a linear algebra result. The manuscript presents no evidence that the attention matrix structure corresponds to the coarse-graining of a physical system, rendering the 'physical' interpretation of this compression speculative and unjustified."
+    },
+    {
+      "category": "regime_of_validity",
+      "claim": "Scalability to long sequences.",
+      "assessment": "Invalid",
+      "justification": "There is a critical discrepancy in the complexity analysis. The manuscript claims $O(n^2)$ complexity in the abstract, while derivations imply $O(n)$. Physical conclusions regarding scalability to long sequences are therefore predicated on contradictory and unsubstantiated complexity claims."
+    }
+  ]
+}

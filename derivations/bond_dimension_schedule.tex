@@ -1,0 +1,19 @@
+% ASSERT_CONVENTION: natural_units=natural, metric_signature=euclidean, fourier_convention=physics, index_positioning=Einstein, state_normalization=trace-normalized, operator_ordering=left_to_right, rg_flow_direction=uv_to_ir, bond_dimension=chi, free_energy_convention=F_E_minus_TS
+
+% Bond Dimension Schedule: \chi(l) = \chi_0 * (n_l/n)^\gamma
+
+% Consistency relation with RG-IB flow:
+% \chi(l) must preserve IB-mutual information to error threshold \epsilon
+
+% Option 1: Static Schedule
+% \chi(l) = \text{const} \implies \gamma = 0
+% Pros: Efficient, easy to implement
+% Cons: Fragile to changes in spectral decay \alpha
+
+% Option 2: Adaptive Schedule
+% \chi(l) = \chi_{threshold} \text{ based on } \sum_{i=\chi+1}^\infty \sigma_i^2 \le \epsilon^2
+% Pros: Robust, ensures error bound
+% Cons: Computationally expensive at each RG step
+
+% DECISION: Adaptive Schedule (Robustness preferred for IB-RG mapping)
+% RATIONALE: The sensitivity of approximation error to \alpha requires dynamic adjustment of bond dimension to maintain information monotonicity.

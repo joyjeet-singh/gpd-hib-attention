@@ -1,0 +1,70 @@
+% ASSERT_CONVENTION: natural_units=natural, metric_signature=euclidean, fourier_convention=physics, state_normalization=trace-normalized, gauge_choice=N/A
+
+\documentclass{article}
+\usepackage{amsmath, amssymb, amsthm}
+
+\title{Formalism Refinement: Low-Rank MPO-Attention and Bias Extension}
+\author{GPD Executor}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+
+\begin{document}
+
+\section{Low-Rank Condition for MPO-Attention}
+
+Let $A \in \mathbb{R}^{n \times n}$ be the attention matrix. The MPO representation of attention seeks a rank-$\chi$ approximation $A_{MPO}$.
+
+\begin{theorem}
+Let $\sigma_1 \ge \sigma_2 \ge \dots \ge \sigma_n \ge 0$ be the singular values of $A$. The Frobenius norm approximation error $\left\| A - A_{MPO} \right\|_F \le \epsilon$ is satisfied if and only if:
+\[ \sum_{i=\chi+1}^n \sigma_i^2 \le \epsilon^2 \]
+\end{theorem}
+
+\begin{proof}
+By the Eckart-Young-Mirsky theorem, the best rank-$\chi$ approximation of $A$ in the Frobenius norm is given by the truncated singular value decomposition $A_\chi = \sum_{i=1}^\chi \sigma_i u_i v_i^T$. The error is:
+\[ \left\| A - A_\chi \right\|_F^2 = \sum_{i=\chi+1}^n \sigma_i^2 \]
+Setting this $\le \epsilon^2$ yields the condition.
+\end{proof}
+
+\section{RG Approximation Theorem}
+
+\begin{theorem}
+Let $A$ have singular value decomposition $A = \sum_{i=1}^n \sigma_i u_i v_i^T$. Let $\mathcal{R}$ be the RG coarse-graining map, assumed to be a bounded linear operator with $\|\mathcal{R}\| \le 1$.
+The error $\epsilon' = \left\| \mathcal{R}(A) - A'_{MPO} \right\|_F$ satisfies:
+\[ \epsilon' \le \epsilon(\chi, n) = \sqrt{\sum_{i=\chi+1}^n \sigma_i^2} \]
+\end{theorem}
+
+\begin{proof}
+Let $A_\chi = \sum_{i=1}^\chi \sigma_i u_i v_i^T$. Then $\mathcal{R}(A_\chi) = \sum_{i=1}^\chi \sigma_i \mathcal{R}(u_i) \mathcal{R}(v_i)^T$ is a rank $\le \chi$ approximation of $\mathcal{R}(A)$.
+Therefore:
+\[ \left\| \mathcal{R}(A) - A'_{MPO} \right\|_F \le \left\| \mathcal{R}(A) - \mathcal{R}(A_\chi) \right\|_F = \left\| \mathcal{R}(A - A_\chi) \right\|_F \le \|\mathcal{R}\| \left\| A - A_\chi \right\|_F \le \epsilon(\chi, n) \]
+\end{proof}
+
+\section{MERA 2-level Binary Tree MPO-Attention Structure}
+
+We define the MPO-attention forward pass as a 2-level binary tree MERA structure. The attention operator $A$ is represented as a contraction of isometric tensors derived from the Phase 01 RG coarse-graining steps. Let $\{T_l\}$ be the set of isometric tensors at level $l$.
+The MERA MPO is defined as:
+\[ A_{MPO} = \mathcal{C}\left( \bigotimes_{l=1}^2 T_l \right) \]
+where $\mathcal{C}$ denotes the contraction map. Each tensor $T_l$ satisfies the isometry condition $T_l^\dagger T_l = I$.
+
+\subsection{Failure Modes}
+
+The validity of the MERA binary tree MPO-attention depends on the isometry condition $T_l^\dagger T_l = I$. In practice, the tensors $T_l$ are obtained via RG flow in Phase 01, which introduces numerical noise.
+\[ T_l^\dagger T_l = I + \delta_l, \quad \|\delta_l\| \approx \mathcal{O}(\text{numerical noise}) \]
+This isometry breaking leads to a buildup of error across layers $l$. If $\|\delta_l\|$ is large, the MPO-attention structure fails to preserve the attention matrix rank property, causing catastrophic performance degradation.
+
+
+
+\section{Biased Attention}
+
+\begin{theorem}
+Let $A = \text{softmax}(X + B)$ where $X = QK^T/\sqrt{d}$ with $\text{rank}(X) \le \chi$, and $B$ is a bias matrix with $\text{rank}(B) = r$.
+Under a linearization approximation of the attention mechanism, $A$ admits an MPO representation with bond dimension $\chi + r$.
+\end{theorem}
+
+\begin{proof}
+The argument of the softmax is $Z = X + B$.
+By subadditivity of the rank:
+\[ \text{rank}(Z) = \text{rank}(X + B) \le \text{rank}(X) + \text{rank}(B) \le \chi + r \]
+Thus, the biased attention logits $Z$ are rank $\chi + r$. Assuming a rank-structured approximation of the softmax (e.g., Taylor expansion or exponential kernel), the output $A$ admits an MPO representation with bond dimension $\chi + r$.
+\end{proof}

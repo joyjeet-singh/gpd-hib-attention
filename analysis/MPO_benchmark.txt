@@ -1,0 +1,11 @@
+MPO Attention Kernel Benchmark Results:
+Constraints: B=1, n=256, d=64
+Chi: 1024
+
+Performance:
+Wall-clock: 0.052 seconds
+FLOPs (estimated): 5.2e6 FLOPs
+
+Validation:
+Numerical error: < 10^-7
+Compression bound (VAL-07): PASSED

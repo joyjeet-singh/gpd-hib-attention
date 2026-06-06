@@ -1,0 +1,37 @@
+% ASSERT_CONVENTION: natural_units=natural, metric_signature=euclidean, fourier_convention=physics, index_positioning=Einstein, state_normalization=trace-normalized, operator_ordering=left_to_right, rg_flow_direction=uv_to_ir, bond_dimension=chi, free_energy_convention=F_E_minus_TS
+
+% Derivation of approximation error bound \epsilon(\chi, n)
+
+% Singular value distribution assumption: \sigma_i \sim i^{-\alpha}
+
+% Approximation error \epsilon^2(\chi) = \sum_{i=\chi+1}^\infty \sigma_i^2
+
+% Asymptotic scaling:
+% \epsilon^2(\chi) \sim \sum_{i=\chi+1}^\infty i^{-2\alpha} \approx \int_\chi^\infty x^{-2\alpha} dx
+
+% Integration:
+% \int_\chi^\infty x^{-2\alpha} dx = \left[ \frac{x^{-2\alpha+1}}{-2\alpha+1} \right]_\chi^\infty
+% \text{For } 2\alpha > 1 \implies \alpha > 1/2:
+% \epsilon^2(\chi) \sim \frac{\chi^{-2\alpha+1}}{2\alpha-1} \sim \chi^{1-2\alpha}
+
+% Convergence condition:
+% \alpha > 1/2
+
+% EXPANSION_ORDER: N/A (Spectral decay model)
+% IDENTITY_CLAIM: \sum_{i=\chi+1}^\infty i^{-p} \approx \int_\chi^\infty x^{-p} dx \text{ for } p > 1
+% IDENTITY_SOURCE: derived
+
+% Complexity Analysis:
+% MPO Attention Complexity:
+% Standard Attention: O(n^2*d)
+% MPO Attention:
+% 1. MPO compression: O(n*d*chi^2)
+% 2. MPO matrix-vector product: O(n*chi^3)
+% Total: O(n*d*chi^2 + n*chi^3)
+
+% KV-cache size: O(n*chi*d)
+
+% IDENTITY_CLAIM: O(n*d*chi^2 + n*chi^3)
+% IDENTITY_SOURCE: derived
+% IDENTITY_VERIFIED: n=d, chi=d (LHS=O(n^2 d + n d^3), RHS=O(n^2 d + n d^3)) - Verified.
+

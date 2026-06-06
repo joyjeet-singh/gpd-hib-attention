@@ -1,0 +1,25 @@
+{
+  "claims": [
+    {
+      "id": "theorem_1",
+      "kind": "Approximation Theorem",
+      "statement": "MPO-attention with bond dimension chi achieves || A - A_MPO ||_F <= sqrt(sum_{i=chi+1}^n sigma_i^2(A)) + delta(chi)",
+      "hypotheses": ["chi < n", "MPO structure"],
+      "parameters": ["chi", "n", "A"]
+    },
+    {
+      "id": "theorem_2",
+      "kind": "Lipschitz Continuity",
+      "statement": "The attention mechanism with beta = 1/sqrt(d) has an effective Lipschitz constant C(beta) = beta/4",
+      "hypotheses": ["beta = 1/sqrt(d)"],
+      "parameters": ["d", "beta"]
+    },
+    {
+      "id": "theorem_3",
+      "kind": "Local Level-wise Equivariance",
+      "statement": "Within each MERA level l, the attention computation is equivariant under permutations that preserve the binary tree topology.",
+      "hypotheses": ["bias-free attention"],
+      "parameters": ["l", "tree topology"]
+    }
+  ]
+}

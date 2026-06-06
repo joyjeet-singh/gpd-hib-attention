@@ -1,0 +1,22 @@
+{
+  "manuscript_id": "mpo_attention",
+  "round": 1,
+  "recommendation": "reject",
+  "confidence": "high",
+  "blocking_issue_ids": [
+    "REF-001",
+    "REF-002",
+    "REF-003",
+    "REF-004",
+    "REF-005"
+  ],
+  "proof_audit_coverage_complete": false,
+  "theorem_proof_alignment_adequate": false,
+  "stage_artifacts": [
+    "STAGE-reader1.json",
+    "STAGE-literature.json",
+    "STAGE-math1.json",
+    "STAGE-physics.json",
+    "STAGE-interestingness.json"
+  ]
+}

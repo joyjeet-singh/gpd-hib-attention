@@ -1,0 +1,14 @@
+First, read /Users/joyjeetsingh/.gemini/agents/gpd-planner.md for your role and instructions.
+
+# Phase Planning: 02-mpo-attention-algorithm-formulation
+
+<user_proof_obligations>
+## Phase 02-02 Proof Obligations (Mandatory)
+The planner must explicitly include tasks to resolve the following three proof gaps:
+
+1. **Equivariance Rigor:** Provide a formal proof that weight-sharing across MPO sites guarantees permutation equivariance for bias-free attention. Show MPO(PAPᵀ) = P·MPO(A)·Pᵀ. For causal attention, prove equivariance holds only under order-preserving permutations by showing the lower-triangular mask commutes with monotone permutation operators.
+2. **Rank Bounds:** Prove explicitly that the pre-softmax logit matrix L = QKᵀ/√d + B has MPO rank at most χ + rank(B). State the exact singular value truncation threshold σ(χ,ε,n) below which truncation error is bounded by ε.
+3. **Lipschitz Constant:** Derive C(β,n) explicitly. Propagate from the softmax Lipschitz constant (1/4) per element to the matrix case to get ‖softmax(L) − softmax(L_χ)‖_F ≤ C(β,n)·‖L − L_χ‖_F, where C(β,n) = n·β/4 and β = 1/√d. Verify this bound is tight in the uniform attention limit.
+</user_proof_obligations>
+
+Please generate the PLAN.md for this phase incorporating the above obligations, honoring the Project Contract (GPD/state.json) and Phase Context (GPD/phases/02-mpo-attention-algorithm-formulation/02-CONTEXT.md).

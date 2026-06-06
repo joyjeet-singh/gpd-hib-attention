@@ -1,0 +1,26 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{Referee Report: MPO-Attention Reformulation}
+\author{GPD Referee}
+\date{2026-06-01}
+
+\begin{document}
+\maketitle
+
+\section*{Summary}
+The manuscript proposes Hierarchical MPO-Attention, a method for compressing transformer attention matrices using a binary tree structure inspired by MERA. While the technical approach is coherent, the paper's scientific framing is fundamentally flawed by the unsupported use of physical terminology (MERA, entanglement) to justify a purely computational method.
+
+\section*{Recommendation: REJECT}
+The core claims are unsupported, and the venue fit is poor.
+
+\section*{Major Issues}
+\begin{itemize}
+    \item \textbf{REF-001: Misleading Complexity and Memory Claims.} The abstract claims an extreme reduction in memory footprint, yet the empirical data contradicts this.
+    \item \textbf{REF-002: Misuse of Physical Terminology.} The usage of MERA and RG terminology is physically unjustified.
+    \item \textbf{REF-003: Formal Rigor of Theorem 3.} Theorem 3 lacks a formal definition and proof.
+\end{itemize}
+
+\end{document}

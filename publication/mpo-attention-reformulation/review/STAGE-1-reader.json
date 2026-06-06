@@ -1,0 +1,19 @@
+{
+  "manuscript": "mpo_attention.tex",
+  "reviewer_role": "First-stage reader",
+  "summary": "The paper presents Hierarchical MPO-Attention, a tensor network approach for compressing the self-attention matrix using a 2-level binary tree MERA structure. The authors claim computational efficiency gains and provide theoretical analysis of approximation error, Lipschitz continuity, and local equivariance, supported by limited empirical associative recall results.",
+  "findings": {
+    "overclaims": [
+      "The abstract claims a $16\times$ reduction in constant-factor complexity, which is presented as a significant improvement but the total complexity remains $O(n^2)$.",
+      "The 'provable error bounds' in Theorem 1 rely on a loosely defined $\delta(\chi)$ gap, which is not bounded or calculated, making the theorem more of a definition than a robust bound.",
+      "The equivariance claim is presented broadly in the abstract, but Theorem 3 only demonstrates 'local level-wise equivariance', not global."
+    ],
+    "missing_deliverables": [
+      "The empirical evaluation is limited to $n=64$ and associative recall tasks, failing to demonstrate scaling behavior or performance on representative NLP tasks."
+    ],
+    "claim_structure_blockers": [
+      "The dependence on a '2-level' hierarchy limits the applicability for longer sequences, as noted by the authors in the discussion, but the abstract presents the method without clearly framing it as a constrained solution."
+    ]
+  },
+  "recommendation_ceiling": "May support publication as a methodology piece if empirical results are substantially broadened and theoretical bounds are made more concrete."
+}

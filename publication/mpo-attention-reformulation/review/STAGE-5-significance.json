@@ -1,0 +1,27 @@
+{
+  "manuscript_id": "mpo-attention-reformulation",
+  "review_stage": "significance",
+  "recommendation_ceiling": "reject",
+  "findings": [
+    {
+      "category": "significance",
+      "issue": "Weak physical motivation and terminology misuse.",
+      "details": "The manuscript attempts to frame tensor network compression of attention mechanisms as being based on Renormalization Group (RG) fixed points. However, the tensors are learned parameters in a neural network, not fixed points of a physical Hamiltonian flow. This misuse of physics terminology weakens the scientific credibility of the paper."
+    },
+    {
+      "category": "venue_fit",
+      "issue": "Poor fit for physics-oriented venues.",
+      "details": "The paper relies on physical terminology to justify a technique that is fundamentally based on linear algebra (SVD truncation). The 'physics' contribution is not a scientific advance but a superficial application of terminology. For a venue focused on physics, this is not a significant contribution."
+    },
+    {
+      "category": "claims_proportionality",
+      "issue": "Overstated complexity and theoretical basis.",
+      "details": "The abstract claims O(n^2) complexity with a constant reduction, while derivations imply O(n). This contradiction undermines the central scalability claim. Furthermore, the claim that MERA structures provide a 'theoretical bridge' between tensor networks and attention is unsupported and speculative."
+    },
+    {
+      "category": "technical_merit",
+      "issue": "Technically competent but scientifically mediocre.",
+      "details": "While the linear algebraic formulation of the attention compression might be valid, the paper fails to make a convincing scientific advance. It is an engineering technique wrapped in unsupported physical jargon."
+    }
+  ]
+}
